@@ -2,3 +2,6 @@
 **/*.mat
 **/*.h5
 **/*.png
+
+# Ignore tmp files
+**/*.asv
