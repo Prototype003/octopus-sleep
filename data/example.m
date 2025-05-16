@@ -135,6 +135,23 @@ data_sampled = table(...
 	'VariableNames', field_names,...
 	'VariableTypes', field_types);
 
+%{
+% Take the first N epochs of each segment
+row_counter = 1;
+for s = 1 : numel(behaveState_start)
+	
+	segment_indices = find(data.start == behaveState_start(s));
+	
+	data_sampled(row_counter:row_counter+sample_nEpochs-1, :) = data(segment_indices(1:sample_nEpochs), :);
+	
+	row_counter = row_counter + sample_nEpochs;
+	
+	% Track where in the overall LFP the sampling is from
+	line(data.start([segment_indices(midpoint) segment_indices(midpoint)]) + tlength*data.epoch(segment_indices(midpoint)), [-25 20],...
+		'Color', 'k', 'LineWidth', 1);
+end
+%}
+
 % Take the middle N epochs of each segment
 row_counter = 1;
 for s = 1 : numel(behaveState_start)
